@@ -37,44 +37,43 @@ class App extends Component {
 
   // Perform the requested search or display the default images when clicked
   performSearch = (query = 'cats') =>{
-    this.setState({
-      loading: true,
-    });
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apikey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-      .then(response => {
-        if (query === 'cats') {
-
-          this.setState({
-            cats: response.data.photos.photo,
-            loading:false
-          });
+    try {
+      this.setState({ loading: true });
+      
+      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apikey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+        .then(response => {
+          if (query === 'cats') {
+  
+            this.setState({
+              cats: response.data.photos.photo,
+              loading:false
+            });
+            
+          } else if(query === 'dogs') {
+            this.setState({
+              dogs: response.data.photos.photo,
+              loading:false
+            });
+            
+          } else if(query === 'birds') {
+            this.setState({
+              birds: response.data.photos.photo,
+              loading:false
+            });
+  
+          }else{
+            this.setState({
+              search: response.data.photos.photo,
+              loading:false
+            });
+  
+          }
           
-        } else if(query === 'dogs') {
-          this.setState({
-            dogs: response.data.photos.photo,
-            loading:false
-          });
-          
-        } else if(query === 'birds') {
-          this.setState({
-            birds: response.data.photos.photo,
-            loading:false
-          });
+        }) 
 
-        }else{
-          this.setState({
-            search: response.data.photos.photo,
-            loading:false
-          });
-
-        }
-        
-      })    
-    // handle error
-    .catch(error => { 
+    } catch (error) { 
       console.log('Error fetching and parsing data', error);
-    }); 
- 
+    } 
   }
 
 

@@ -9,6 +9,10 @@ body {
     margin: 52px 0 40px;
     text-transform: capitalize;
   }
+
+  p {
+    font-size: 30px;
+  }
   
   ul {
     list-style-type: none;
